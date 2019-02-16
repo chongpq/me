@@ -8,7 +8,7 @@ import java.util.Date;
 
 public class Transaction {
 
-    public static final String DATE_PATTERN = "dd/MM/yyyy hh:mm:ss";
+    public static final String DATE_PATTERN = "dd/MM/yyyy HH:mm:ss";
     private final String transactionId;
     private final String fromAccountId;
     private final String toAccountId;

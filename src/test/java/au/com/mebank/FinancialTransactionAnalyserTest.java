@@ -17,7 +17,7 @@ public class FinancialTransactionAnalyserTest {
         PrintStream ps = new PrintStream(os);
         System.setErr(ps);
         FinancialTransactionAnalyser.main(new String[] {});
-        assertEquals("Insufficient command line arguments\r\n", os.toString());
+        assertEquals("Insufficient command line arguments", os.toString().trim());
     }
 
     @Test
@@ -26,7 +26,7 @@ public class FinancialTransactionAnalyserTest {
         PrintStream ps = new PrintStream(os);
         System.setErr(ps);
         FinancialTransactionAnalyser.main(new String[] {"asdf"});
-        assertEquals("Error reading file 'asdf'\r\n", os.toString());
+        assertEquals("Error reading file 'asdf'", os.toString().trim());
     }
 
 }

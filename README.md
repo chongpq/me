@@ -8,6 +8,9 @@ java -jar ./target/financial-transaction-analyser-1.0-SNAPSHOT.jar ./src/test/re
 
 Follow the command prompts to enter in account id , from date, to date and you will get the expected results. Press `ctrl-c` at anytime to exit.
 
+### Testing
+The results of testing can be view after the running `mvn clean install` by viewing ./target/site/jacoco/index.html
+
 ### Assumptions
 * Reversals reverse the whole transaction by TransactionId even if the transaction details don't match up. This means that if there are two rows with the same TransactionId both rows will be removed by the one reversal.
 * We are using the same TimeZone/Locale as csv writer.

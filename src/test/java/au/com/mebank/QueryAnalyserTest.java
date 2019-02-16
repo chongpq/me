@@ -47,8 +47,8 @@ public class QueryAnalyserTest {
     public void testQueryAnalyserOnTheTimeBoundary() throws ParseException {
         RelativeAccount output = queryAnalyser.analyse("ACC778899",
                 "20/10/2018 12:47:55", "21/10/2018 09:30:00");
-        assertEquals(1, output.getCount());
-        assertEquals(new BigDecimal("5.00"), output.getAmount());
+        assertEquals(3, output.getCount());
+        assertEquals(new BigDecimal("37.25"), output.getAmount());
     }
 
     @Test

@@ -4,12 +4,16 @@ import au.com.mebank.model.RelativeAccount;
 import au.com.mebank.model.Transaction;
 
 import java.math.BigDecimal;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
+import static java.lang.Math.min;
+
 class QueryAnalyser {
+
+    public static final Comparator<Transaction> TRANSACTION_COMPARATOR =Comparator.comparing(Transaction::getCreatedAt);
 
     private final List<Transaction> transactions;
     private final SimpleDateFormat sdf;
@@ -19,15 +23,25 @@ class QueryAnalyser {
         this.sdf = new SimpleDateFormat(Transaction.DATE_PATTERN);
     }
 
-    RelativeAccount analyse(String accountId, String from, String to) throws ParseException {
-        Date fromDate = sdf.parse(from);
-        Date toDate = sdf.parse(to);
-        return transactions.stream()
-                .filter(transaction -> transaction.getCreatedAt().before(toDate)
-                        && transaction.getCreatedAt().after(fromDate))
+    RelativeAccount analyse(String accountId, String from, String to) {
+        Transaction fromKey = new Transaction(from);
+        Transaction toKey = new Transaction(to);
+        int fromIndex = getIndex(fromKey);
+        int toIndex = min(getIndex(toKey) + 1, transactions.size());
+        return transactions.subList(fromIndex, toIndex)
+                .stream()
                 .filter(transaction -> transaction.getFromAccountId().equals(accountId)
                         || transaction.getToAccountId().equals(accountId))
                 .reduce(new RelativeAccount(accountId, 0, BigDecimal.ZERO),
                         RelativeAccount::addTransaction, RelativeAccount::add);
+    }
+
+    int getIndex(Transaction key) {
+        int i = Collections.binarySearch(transactions, key, TRANSACTION_COMPARATOR);
+        if (i < 0) {
+            return (-1 * i ) - 1;
+        } else {
+            return i;
+        }
     }
 }

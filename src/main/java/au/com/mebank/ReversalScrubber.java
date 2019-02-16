@@ -17,7 +17,7 @@ public class ReversalScrubber {
         Set<String> removeTransactions = new HashSet<>();
         List<Transaction> transactions = new ArrayList<>();
 
-        stream.forEach(line -> {
+        stream.forEachOrdered(line -> {
             String[] strings = line.split(CSV_SPLIT_REGEX);
             if (strings.length <= 6) {
                 transactions.add(new Transaction(strings[0], strings[1], strings[2],

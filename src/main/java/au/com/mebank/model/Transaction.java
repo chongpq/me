@@ -15,6 +15,14 @@ public class Transaction {
     private final Date createdAt;
     private final BigDecimal amount;
 
+    public Transaction(Date createdAt) {
+        this.createdAt = createdAt;
+        this.transactionId = "";
+        this.fromAccountId = "";
+        this.toAccountId = "";
+        this.amount = BigDecimal.ZERO;
+    }
+
     public Transaction(String transactionId, String fromAccountId,
                        String toAccountId, String createdAt, String amount) {
         this.transactionId = transactionId;

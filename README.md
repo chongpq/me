@@ -16,13 +16,13 @@ The results of testing can be viewed after the running `mvn clean install` by vi
 * We are using the same TimeZone/Locale as csv writer.
 * That the time boundaries are excluded from the RelativeAccount calculation. So it means that the time is between the from and to dates and not including them.
 * Input file and records are all in a valid format - so I depend on this in the Transaction constructor. Runtime exception are being thrown instead of being properly named and handled.
-* Transaction are recorded in order - I don't depend on this one hence the use of foreach in the ReversalScrubber and the fact that I'm cycling through all transactions and checking if they're needed for each query. I've explored coding an improvement in [https://github.com/chongpq/me/tree/createAt](https://github.com/chongpq/me/tree/createAt) however this code is incomplete at the moment.
+* Transaction are recorded in order - I don't depend on this one hence the use of foreach in the ReversalScrubber and the fact that I'm cycling through all transactions and checking if they're needed for each query.
 
 ### Design
 Given that, `if a transaction has a reversing transaction, this transaction should be omitted from the calculation, even if the reversing transaction is outside the given time frame`, means that we can preprocess the transactions beforehand. So we scrub the records of all reversals. The scrubbing is handled by the ReversalScrubber class. Then we can process any queries.
 
 The query analysing is done by the QueryAnalyser class. It uses filter functions to get the right rows to process by filtering on the createAt, fromAccount and toAccount. I've kept them in 2 filter functions.
-1. createAt - as this may be replaced with a better way - see [https://github.com/chongpq/me/tree/createAt](https://github.com/chongpq/me/tree/createAt)
+1. createAt
 2. fromAccount and toAccount
 
 We need to calculate count and the relative account balance - this is handled in the RelativeAccount class, with the method of note being the RelativeAccount::addTransaction.

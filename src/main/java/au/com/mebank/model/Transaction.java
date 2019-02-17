@@ -8,20 +8,15 @@ import java.util.Date;
 
 public class Transaction {
 
-    public static final String DATE_PATTERN = "dd/MM/yyyy hh:mm:ss";
+    public static final String DATE_PATTERN = "dd/MM/yyyy HH:mm:ss";
     private final String transactionId;
     private final String fromAccountId;
     private final String toAccountId;
     private final Date createdAt;
     private final BigDecimal amount;
 
-    public Transaction(String createdAt) {
-        try {
-            SimpleDateFormat sdf = new SimpleDateFormat(DATE_PATTERN);
-            this.createdAt = sdf.parse(createdAt);
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
+    public Transaction(Date createdAt) {
+        this.createdAt = createdAt;
         this.transactionId = "";
         this.fromAccountId = "";
         this.toAccountId = "";
